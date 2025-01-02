@@ -632,8 +632,8 @@ def write_flash(esp, args):
 
                 while len(image) > 0:
                     print_overwrite(
-                        "Writing at 0x%08x... (%d %%)"
-                        % (address + bytes_written, 100 * (seq + 1) // blocks)
+                        "%s Writing at 0x%08x... (%d %%)"
+                        % (esp._port.port, address + bytes_written, 100 * (seq + 1) // blocks)
                     )
                     sys.stdout.flush()
                     block = image[0 : esp.FLASH_WRITE_SIZE]
@@ -705,16 +705,16 @@ def write_flash(esp, args):
             if t > 0.0:
                 speed_msg = " (effective %.1f kbit/s)" % (uncsize / t * 8 / 1000)
             print_overwrite(
-                "Wrote %d bytes (%d compressed) at 0x%08x in %.1f seconds%s..."
-                % (uncsize, bytes_sent, address, t, speed_msg),
+                "%s Wrote %d bytes (%d compressed) at 0x%08x in %.1f seconds%s..."
+                % (esp._port.port, uncsize, bytes_sent, address, t, speed_msg),
                 last_line=True,
             )
         else:
             if t > 0.0:
                 speed_msg = " (%.1f kbit/s)" % (bytes_written / t * 8 / 1000)
             print_overwrite(
-                "Wrote %d bytes at 0x%08x in %.1f seconds%s..."
-                % (bytes_written, address, t, speed_msg),
+                "%s Wrote %d bytes at 0x%08x in %.1f seconds%s..."
+                % (esp._port.port, bytes_written, address, t, speed_msg),
                 last_line=True,
             )
 
@@ -734,7 +734,7 @@ def write_flash(esp, args):
             except NotImplementedInROMError:
                 pass
 
-    print("\nLeaving...")
+    print("\n{esp._port.port} Leaving...")
 
     if esp.IS_STUB:
         # skip sending flash_finish to ROM loader here,
