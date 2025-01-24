@@ -734,7 +734,7 @@ def write_flash(esp, args):
             except NotImplementedInROMError:
                 pass
 
-    print("\n{esp._port.port} Leaving...")
+    print(f"\n{esp._port.port} Leaving...")
 
     if esp.IS_STUB:
         # skip sending flash_finish to ROM loader here,
